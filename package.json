@@ -1,11 +1,19 @@
 {
-  "name": "event-management",
+  "name": "agilno",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run server & npm run client",
+    "server": "cd server && npm start",
+    "client": "cd client && npm start"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
 }
