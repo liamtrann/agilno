@@ -16,8 +16,17 @@ const EventCreateForm = () => {
     axios
       .post(
         "/api/events/",
-        { name: eventName, date: eventDate, capacity },
-        { headers: user.token }
+        {
+          name: eventName,
+          date: eventDate,
+          capacity,
+          username: user.username,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       )
       .then((response) => {
         setEventName("");
@@ -68,6 +77,7 @@ const EventCreateForm = () => {
             id="eventDate"
             value={eventDate}
             onChange={(e) => setEventDate(e.target.value)}
+            min={new Date().toISOString().split("T")[0]}
             required
           />
         </div>

@@ -1,9 +1,15 @@
 const Event = require("../models/Event");
 
 exports.createEvent = async (req, res) => {
-  const { name, date, capacity } = req.body;
+  const { name, date, capacity, username } = req.body;
+
   try {
-    const event = new Event({ name, date, capacity });
+    const event = new Event({
+      name,
+      date,
+      capacity,
+      registrations: [username],
+    });
     await event.save();
     res.status(201).send("Event created successfully");
   } catch (error) {
@@ -20,9 +26,20 @@ exports.listEvents = async (req, res) => {
   }
 };
 
+exports.getEventById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const event = await Event.findById(id);
+    res.send(event);
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    res.status(400).send(error.message);
+  }
+};
+
 exports.registerForEvent = async (req, res) => {
+  const { username } = req.body;
   const { id } = req.params;
-  const userId = req.user.userId;
   try {
     const event = await Event.findById(id);
     if (!event) {
@@ -34,10 +51,10 @@ exports.registerForEvent = async (req, res) => {
     if (event.registrations.length >= event.capacity) {
       return res.status(400).send("Event is full");
     }
-    if (event.registrations.includes(userId)) {
+    if (event.registrations.includes(username)) {
       return res.status(400).send("User already registered");
     }
-    event.registrations.push(userId);
+    event.registrations.push(username);
     await event.save();
     res.send("Registered successfully");
   } catch (error) {

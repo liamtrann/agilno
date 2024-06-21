@@ -16,7 +16,6 @@ const SignIn = () => {
     axios
       .post("/api/users/login", { username, password })
       .then((response) => {
-        console.log(response)
         const token = response.data.token;
         const userData = {
           username: response.data.username,

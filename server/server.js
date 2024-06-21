@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 mongoose
-  .connect("mongodb://localhost:27017/agilno", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

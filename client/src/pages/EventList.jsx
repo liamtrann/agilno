@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -5,9 +6,14 @@ const EventList = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("/api/events")
-      .then((response) => response.json())
-      .then((data) => setEvents(data));
+    axios
+      .get("/api/events")
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+      });
   }, []);
 
   return (
@@ -18,8 +24,8 @@ const EventList = () => {
           <div className="list-group">
             {events.map((event) => (
               <Link
-                key={event.id}
-                to={`/events/${event.id}`}
+                key={event._id}
+                to={`/events/${event._id}`}
                 className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
               >
                 <span>{event.name}</span>

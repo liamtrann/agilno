@@ -4,11 +4,13 @@ const {
   createEvent,
   listEvents,
   registerForEvent,
+  getEventById,
 } = require("../controllers/events");
 const auth = require("../middleware/auth");
 
-router.post("/", createEvent,);
+router.post("/", auth, createEvent);
 router.get("/", listEvents);
-router.post("/:id/register", auth, registerForEvent);
+router.get("/:id/", getEventById);
+router.post("/:id/register", registerForEvent);
 
 module.exports = router;

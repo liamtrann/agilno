@@ -15,7 +15,12 @@ const SignUp = () => {
     axios
       .post("/api/users/register", { username, password })
       .then((response) => {
-        signIn({ username });
+        const token = response.data.token;
+        const userData = {
+          username: response.data.username,
+          token: token,
+        };
+        signIn(userData);
         navigate("/");
       })
       .catch((error) => {

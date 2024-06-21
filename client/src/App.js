@@ -16,10 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<EventList />} />
           <Route path="/events/:id" element={<EventDetail />} />
-          <Route
-            path="/create"
-            element={<EventCreate />}
-          />
+          <Route path="/create" element={<EventCreate />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
